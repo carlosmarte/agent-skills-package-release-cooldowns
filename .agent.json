@@ -95,9 +95,22 @@
       "unit": null,
       "native_support": false,
       "workaround": "dependabot-or-renovate-bot-side-cooldown"
+    },
+    {
+      "key": "release-cooldown-cargo",
+      "path": "skills/release-cooldown-cargo",
+      "skill_md": "skills/release-cooldown-cargo/SKILL.md",
+      "ecosystem": "rust",
+      "tool": "cargo",
+      "config_file": null,
+      "cli_flag": "-Zunstable-options --publish-time (nightly only)",
+      "unit": "rfc3339 (nightly) / bot-config-unit (stable)",
+      "native_support": "nightly-only",
+      "native_tracking_issue": "rust-lang/cargo#16271",
+      "workaround": "dependabot-or-renovate-bot-side-cooldown"
     }
   ],
-  "ecosystems": ["javascript", "python"],
+  "ecosystems": ["javascript", "python", "rust"],
   "cross_cutting_docs": [
     ".agents/cheatsheet.md",
     ".agents/threat-model.md"

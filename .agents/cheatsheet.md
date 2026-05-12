@@ -13,6 +13,7 @@ The seven tools all express "ignore versions younger than N" but they disagree o
 | pip | CLI only | `--uploaded-prior-to=` | ISO 8601 timestamp (or `P7D` in ≥26.1) | `"2026-05-05T00:00:00Z"` | omit flag per-invocation |
 | pipx | CLI only, via passthrough | `--pip-args="--uploaded-prior-to=..."` | inherits pip | inherits pip | omit per-invocation |
 | poetry | **bot config only** | Renovate `minimumReleaseAge` / Dependabot `cooldown.default-days` | bot's choice | `"7 days"` / `7` | bot's per-package rule |
+| cargo | nightly: `cargo generate-lockfile`; stable: bot config | nightly `-Zunstable-options --publish-time`; Renovate `minimumReleaseAge` w/ `matchManagers: ["cargo"]`; Dependabot `cooldown` for `package-ecosystem: cargo` | RFC 3339 (nightly) / bot's unit | `--publish-time 2026-05-05T00:00:00Z` / `"7 days"` | bot's per-package rule |
 
 ## Footguns (read these before copy-pasting)
 
@@ -39,7 +40,10 @@ grep -RIn 'minimumReleaseAge'  --include='pnpm-workspace.yaml'                  
 grep -RIn 'exclude-newer'      --include='pyproject.toml'      --include='uv.toml'  .
 grep -RIn 'uploaded-prior-to'  --include='*.sh'  --include='Makefile*' --include='Dockerfile*' --include='*.yml' --include='*.yaml' .
 
-# Poetry (bot-side)
+# Rust side (nightly publish-time, if used)
+grep -RIn 'publish-time\|lockfile-publish-time' --include='*.sh' --include='Makefile*' --include='*.yml' --include='*.yaml' .
+
+# Poetry + Cargo (bot-side)
 grep -RIn 'minimumReleaseAge\|cooldown:' .github/ renovate.json .renovaterc* 2>/dev/null
 ```
 
@@ -67,5 +71,6 @@ For each ecosystem the bypass form is different — see the individual skill for
 | pip | drop `--uploaded-prior-to` from the single install command |
 | pipx | drop `--pip-args=...` from the single install command |
 | poetry (via bot) | per-package rule in `renovate.json` / `dependabot.yml` |
+| cargo (via bot) | per-package rule in `renovate.json` (`matchManagers: ["cargo"]`) / `dependabot.yml` (`package-ecosystem: cargo`) |
 
 uv's per-package form is the cleanest of the seven — the rest require a global change or a documented per-invocation override.

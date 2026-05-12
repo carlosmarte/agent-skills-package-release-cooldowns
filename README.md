@@ -1,6 +1,6 @@
 # agent-skills-package-release-cooldowns
 
-A package of 7 Claude Code skills covering **release cooldown** (minimum-release-age / quarantine) configuration across the major JavaScript and Python package managers.
+A package of 8 Claude Code skills covering **release cooldown** (minimum-release-age / quarantine) configuration across the major JavaScript, Python, and Rust package managers.
 
 A release cooldown refuses to install package versions younger than N days. Malicious uploads (compromised maintainer tokens, supply-chain injection, typosquat) are usually detected and yanked within days, so refusing fresh versions closes the window where a poisoned tarball could land in your tree.
 
@@ -17,6 +17,7 @@ The seven tools all express the same idea but each uses a different config name,
 | [`release-cooldown-pip`](./skills/release-cooldown-pip/SKILL.md) | pip | `--uploaded-prior-to` CLI — ISO 8601 |
 | [`release-cooldown-pipx`](./skills/release-cooldown-pipx/SKILL.md) | pipx | passthrough via `--pip-args` |
 | [`release-cooldown-poetry`](./skills/release-cooldown-poetry/SKILL.md) | poetry | no native; Renovate / Dependabot bot config |
+| [`release-cooldown-cargo`](./skills/release-cooldown-cargo/SKILL.md) | cargo | nightly `-Z lockfile-publish-time`; otherwise Renovate / Dependabot bot config |
 
 ## LLM entry point
 
