@@ -1,0 +1,105 @@
+{
+  "schema": "agent-skills-monorepo/v1",
+  "generated_at": "2026-05-12T00:00:00Z",
+  "repo": "agent-skills-package-release-cooldowns",
+  "kind": "agent-skills-monorepo",
+  "layout": "skills-root",
+  "skills_root": "skills",
+  "skills": [
+    {
+      "key": "release-cooldown-npm",
+      "path": "skills/release-cooldown-npm",
+      "skill_md": "skills/release-cooldown-npm/SKILL.md",
+      "ecosystem": "javascript",
+      "tool": "npm",
+      "config_file": ".npmrc",
+      "config_key": "min-release-age",
+      "unit": "days",
+      "min_tool_version": "11.10.0",
+      "native_support": true,
+      "per_package_bypass": false
+    },
+    {
+      "key": "release-cooldown-npx",
+      "path": "skills/release-cooldown-npx",
+      "skill_md": "skills/release-cooldown-npx/SKILL.md",
+      "ecosystem": "javascript",
+      "tool": "npx",
+      "config_file": ".npmrc",
+      "config_key": "min-release-age",
+      "cli_flag": "--min-release-age=N",
+      "unit": "days",
+      "min_tool_version": "bundled-with-npm-11.10.0",
+      "native_support": true,
+      "per_package_bypass": false,
+      "delegates_to": "release-cooldown-npm"
+    },
+    {
+      "key": "release-cooldown-pnpm",
+      "path": "skills/release-cooldown-pnpm",
+      "skill_md": "skills/release-cooldown-pnpm/SKILL.md",
+      "ecosystem": "javascript",
+      "tool": "pnpm",
+      "config_file": "pnpm-workspace.yaml",
+      "config_key": "minimumReleaseAge",
+      "unit": "minutes",
+      "min_tool_version": "10.16.0",
+      "native_support": true,
+      "per_package_bypass": "exclude-list"
+    },
+    {
+      "key": "release-cooldown-uv",
+      "path": "skills/release-cooldown-uv",
+      "skill_md": "skills/release-cooldown-uv/SKILL.md",
+      "ecosystem": "python",
+      "tool": "uv",
+      "config_file": "pyproject.toml",
+      "config_key": "[tool.uv].exclude-newer",
+      "cli_flag": "--exclude-newer",
+      "unit": "duration-string-or-rfc3339",
+      "native_support": true,
+      "per_package_bypass": "exclude-newer-package"
+    },
+    {
+      "key": "release-cooldown-pip",
+      "path": "skills/release-cooldown-pip",
+      "skill_md": "skills/release-cooldown-pip/SKILL.md",
+      "ecosystem": "python",
+      "tool": "pip",
+      "config_file": null,
+      "cli_flag": "--uploaded-prior-to",
+      "unit": "iso-8601-timestamp (iso-8601-duration in pip>=26.1)",
+      "native_support": true,
+      "per_package_bypass": false
+    },
+    {
+      "key": "release-cooldown-pipx",
+      "path": "skills/release-cooldown-pipx",
+      "skill_md": "skills/release-cooldown-pipx/SKILL.md",
+      "ecosystem": "python",
+      "tool": "pipx",
+      "config_file": null,
+      "cli_flag": "--pip-args=\"--uploaded-prior-to=...\"",
+      "unit": "inherits-pip",
+      "native_support": false,
+      "delegates_to": "release-cooldown-pip"
+    },
+    {
+      "key": "release-cooldown-poetry",
+      "path": "skills/release-cooldown-poetry",
+      "skill_md": "skills/release-cooldown-poetry/SKILL.md",
+      "ecosystem": "python",
+      "tool": "poetry",
+      "config_file": null,
+      "cli_flag": null,
+      "unit": null,
+      "native_support": false,
+      "workaround": "dependabot-or-renovate-bot-side-cooldown"
+    }
+  ],
+  "ecosystems": ["javascript", "python"],
+  "cross_cutting_docs": [
+    ".agents/cheatsheet.md",
+    ".agents/threat-model.md"
+  ]
+}
